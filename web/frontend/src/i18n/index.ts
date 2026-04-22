@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 import "dayjs/locale/en"
 import "dayjs/locale/zh-cn"
+import "dayjs/locale/ru"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import relativeTime from "dayjs/plugin/relativeTime"
 import i18n from "i18next"
@@ -11,6 +12,7 @@ import { launcherFetch } from "@/api/http"
 
 import en from "./locales/en.json"
 import zh from "./locales/zh.json"
+import ru from "./locales/ru.json"
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
@@ -31,6 +33,9 @@ i18n
       zh: {
         translation: zh,
       },
+      ru: {
+        translation: ru,
+      },
     },
     fallbackLng: "en",
     debug: false,
@@ -43,6 +48,8 @@ i18n
 i18n.on("languageChanged", (lng) => {
   if (lng.startsWith("zh")) {
     dayjs.locale("zh-cn")
+  } else if (lng.startsWith("ru")) {
+    dayjs.locale("ru")
   } else {
     dayjs.locale("en")
   }

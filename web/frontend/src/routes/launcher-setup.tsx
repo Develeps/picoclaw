@@ -68,6 +68,9 @@ function LauncherSetupPage() {
             <DropdownMenuItem onClick={() => i18n.changeLanguage("zh")}>
               简体中文
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => i18n.changeLanguage("ru")}>
+              Русский
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <Button
