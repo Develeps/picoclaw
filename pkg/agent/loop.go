@@ -426,6 +426,29 @@ func (al *AgentLoop) ReloadProviderAndConfig(
 	return nil
 }
 
+// CancelTurn cancels an active turn for the given session key.
+// This is used by the /stop command to stop ongoing LLM generation.
+func (al *AgentLoop) CancelTurn(sessionKey string) bool {
+	ts := al.getActiveTurnState(sessionKey)
+	if ts == nil {
+		return false
+	}
+	
+	// Request hard abort to stop LLM generation and tool execution
+	aborted := ts.requestHardAbort()
+	if aborted {
+		logger.InfoCF("agent", "Turn canceled via /stop command",
+			map[string]any{
+				"session_key": sessionKey,
+				"turn_id":     ts.turnID,
+				"agent_id":    ts.agentID,
+				"channel":     ts.channel,
+				"chat_id":     ts.chatID,
+			})
+	}
+	return aborted
+}
+
 // GetRegistry returns the current registry (thread-safe)
 
 // GetConfig returns the current config (thread-safe)

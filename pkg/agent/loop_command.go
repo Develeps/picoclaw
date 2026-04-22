@@ -214,6 +214,10 @@ func (al *AgentLoop) buildCommandsRuntime(
 		rt.AskSideQuestion = func(ctx context.Context, question string) (string, error) {
 			return al.askSideQuestion(ctx, agent, opts, question)
 		}
+
+		rt.CancelTurn = func(sessionKey string) bool {
+			return al.CancelTurn(sessionKey)
+		}
 	}
 	return rt
 }

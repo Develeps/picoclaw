@@ -22,4 +22,5 @@ type Runtime struct {
 	SwitchChannel      func(value string) error
 	ClearHistory       func() error
 	ReloadConfig       func() error
+	CancelTurn         func(sessionKey string) bool // Cancels active turn for a session
 }

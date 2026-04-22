@@ -134,7 +134,20 @@ func (c *TelegramChannel) Start(ctx context.Context) error {
 	c.bh = bh
 
 	bh.HandleMessage(func(ctx *th.Context, message telego.Message) error {
-		return c.handleMessage(ctx, &message)
+		// Process messages asynchronously to prevent blocking
+		// This allows immediate acceptance of new messages while LLM generates responses
+		go func() {
+			// Create a copy of the context to avoid race conditions
+			ctxCopy := *ctx
+			if err := c.handleMessage(&ctxCopy, &message); err != nil {
+				logger.ErrorCF("telegram", "Failed to handle message", map[string]any{
+					"chat_id":    message.Chat.ID,
+					"message_id": message.MessageID,
+					"error":      err.Error(),
+				})
+			}
+		}()
+		return nil
 	}, th.AnyMessage())
 
 	c.SetRunning(true)
