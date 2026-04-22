@@ -305,7 +305,8 @@
       "maixcam": "MaixCam",
       "matrix": "Matrix",
       "irc": "IRC",
-      "weixin": "WeChat"
+      "weixin": "WeChat",
+      "vk": "VK (ВКонтакте)"
     },
     "weixin": {
       "bindTitle": "Привязка аккаунта WeChat",
@@ -355,6 +356,7 @@
       "groupTriggerMentionOnly": "Только при упоминании в группе",
       "groupTriggerPrefixes": "Префиксы триггера группы",
       "isLark": "Lark (международный)",
+      "groupId": "ID группы",
       "allowFrom": "Разрешить от",
       "allowFromPlaceholder": "например, 123456, 789012",
       "allowOrigins": "Разрешить источники",
@@ -388,6 +390,7 @@
         "groupTriggerMentionOnly": "В групповых чатах отвечать только тогда, когда упоминается бот.",
         "groupTriggerPrefixes": "Пользовательские префиксы триггера группового чата, разделённые запятыми.",
         "isLark": "Использовать международный домен Lark (open.larksuite.com) вместо домена Feishu (open.feishu.cn).",
+        "groupId": "ID сообщества (группы) VK, где установлен бот.",
         "allowFrom": "Разрешённые ID пользователей или групп, разделённые запятыми.",
         "allowOrigins": "Разрешённые домены источников, разделённые запятыми.",
         "wsUrl": "URL службы WebSocket.",

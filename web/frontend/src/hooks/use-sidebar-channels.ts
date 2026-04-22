@@ -7,6 +7,7 @@ import {
   IconBrandQq,
   IconBrandSlack,
   IconBrandTelegram,
+  IconBrandVk,
   IconBrandWechat,
   IconBrandWhatsapp,
   IconCamera,
@@ -46,7 +47,9 @@ const CHANNEL_IMPORTANCE_TAIL = [
 function getChannelImportanceOrder(language: string): string[] {
   const priority = language.startsWith("zh")
     ? ["feishu", "weixin", "discord", "telegram"]
-    : ["discord", "telegram", "feishu", "weixin"]
+    : language.startsWith("ru")
+      ? ["telegram", "vk", "discord", "feishu", "weixin"]
+      : ["discord", "telegram", "vk", "feishu", "weixin"]
   return [...priority, ...CHANNEL_IMPORTANCE_TAIL]
 }
 
@@ -68,6 +71,7 @@ const CHANNEL_ICON_MAP: Record<
   React.ComponentType<{ className?: string }>
 > = {
   telegram: IconBrandTelegram,
+  vk: IconBrandVk,
   discord: IconBrandDiscord,
   slack: IconBrandSlack,
   feishu: IconLark,

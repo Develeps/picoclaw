@@ -21,6 +21,7 @@ import { FeishuForm } from "@/components/channels/channel-forms/feishu-form"
 import { GenericForm } from "@/components/channels/channel-forms/generic-form"
 import { SlackForm } from "@/components/channels/channel-forms/slack-form"
 import { TelegramForm } from "@/components/channels/channel-forms/telegram-form"
+import { VkForm } from "@/components/channels/channel-forms/vk-form"
 import { WecomForm } from "@/components/channels/channel-forms/wecom-form"
 import { WeixinForm } from "@/components/channels/channel-forms/weixin-form"
 import { PageHeader } from "@/components/page-header"
@@ -163,6 +164,8 @@ function isConfigured(
       )
     case "irc":
       return hasValue("server")
+    case "vk":
+      return hasValue("token") && hasValue("group_id")
     default:
       return false
   }
@@ -198,6 +201,8 @@ function getRequiredFieldKeys(channelName: string): string[] {
       return ["homeserver", "user_id", "access_token"]
     case "irc":
       return ["server"]
+    case "vk":
+      return ["token", "group_id"]
     default:
       return []
   }
@@ -454,85 +459,94 @@ export function ChannelConfigPage({ channelName }: ChannelConfigPageProps) {
     if (!channel) return null
     const isEdit = configured
 
-    switch (channel.name) {
-      case "telegram":
-        return (
-          <TelegramForm
+  switch (channel.name) {
+    case "telegram":
+      return (
+        <TelegramForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          fieldErrors={fieldErrors}
+        />
+      )
+    case "discord":
+      return (
+        <DiscordForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          fieldErrors={fieldErrors}
+        />
+      )
+    case "slack":
+      return (
+        <SlackForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          fieldErrors={fieldErrors}
+        />
+      )
+    case "feishu":
+      return (
+        <FeishuForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          fieldErrors={fieldErrors}
+        />
+      )
+    case "vk":
+      return (
+        <VkForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          fieldErrors={fieldErrors}
+        />
+      )
+    case "weixin":
+      return (
+        <WeixinForm
+          config={editConfig}
+          onChange={handleChange}
+          isEdit={isEdit}
+          onBindSuccess={() => void handleWeixinBindSuccess()}
+        />
+      )
+    case "wecom":
+      return (
+        <>
+          <WecomForm
             config={editConfig}
-            onChange={handleChange}
-            configuredSecrets={configuredSecrets}
-            fieldErrors={fieldErrors}
-          />
-        )
-      case "discord":
-        return (
-          <DiscordForm
-            config={editConfig}
-            onChange={handleChange}
-            configuredSecrets={configuredSecrets}
-            fieldErrors={fieldErrors}
-          />
-        )
-      case "slack":
-        return (
-          <SlackForm
-            config={editConfig}
-            onChange={handleChange}
-            configuredSecrets={configuredSecrets}
-            fieldErrors={fieldErrors}
-          />
-        )
-      case "feishu":
-        return (
-          <FeishuForm
-            config={editConfig}
-            onChange={handleChange}
-            configuredSecrets={configuredSecrets}
-            fieldErrors={fieldErrors}
-          />
-        )
-      case "weixin":
-        return (
-          <WeixinForm
-            config={editConfig}
-            onChange={handleChange}
             isEdit={isEdit}
-            onBindSuccess={() => void handleWeixinBindSuccess()}
+            onBindSuccess={() => void handleWecomBindSuccess()}
+            onEnabledChange={(nextEnabled) =>
+              void handleWecomEnabledChange(nextEnabled)
+            }
           />
-        )
-      case "wecom":
-        return (
-          <>
-            <WecomForm
-              config={editConfig}
-              isEdit={isEdit}
-              onBindSuccess={() => void handleWecomBindSuccess()}
-              onEnabledChange={(nextEnabled) =>
-                void handleWecomEnabledChange(nextEnabled)
-              }
-            />
-            <GenericForm
-              config={editConfig}
-              onChange={handleChange}
-              configuredSecrets={configuredSecrets}
-              hiddenKeys={[...hiddenKeys, "bot_id"]}
-              requiredKeys={requiredKeys}
-              fieldErrors={fieldErrors}
-            />
-          </>
-        )
-      default:
-        return (
           <GenericForm
             config={editConfig}
             onChange={handleChange}
             configuredSecrets={configuredSecrets}
-            hiddenKeys={hiddenKeys}
+            hiddenKeys={[...hiddenKeys, "bot_id"]}
             requiredKeys={requiredKeys}
             fieldErrors={fieldErrors}
           />
-        )
-    }
+        </>
+      )
+    default:
+      return (
+        <GenericForm
+          config={editConfig}
+          onChange={handleChange}
+          configuredSecrets={configuredSecrets}
+          hiddenKeys={hiddenKeys}
+          requiredKeys={requiredKeys}
+          fieldErrors={fieldErrors}
+        />
+      )
+  }
   }
 
   return (

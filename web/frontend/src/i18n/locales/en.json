@@ -305,7 +305,8 @@
       "maixcam": "MaixCam",
       "matrix": "Matrix",
       "irc": "IRC",
-      "weixin": "WeChat"
+      "weixin": "WeChat",
+      "vk": "VK (VKontakte)"
     },
     "weixin": {
       "bindTitle": "WeChat Account Binding",
@@ -355,6 +356,7 @@
       "groupTriggerMentionOnly": "Group Mention Only",
       "groupTriggerPrefixes": "Group Trigger Prefixes",
       "isLark": "Lark (International)",
+      "groupId": "Group ID",
       "allowFrom": "Allow From",
       "allowFromPlaceholder": "e.g. 123456, 789012",
       "allowOrigins": "Allow Origins",
@@ -387,6 +389,7 @@
         "placeholderEnabled": "Enable temporary placeholder messages before the final reply is sent.",
         "groupTriggerMentionOnly": "In group chats, respond only when the bot is mentioned.",
         "groupTriggerPrefixes": "Custom group-chat trigger prefixes, separated by commas.",
+        "groupId": "The VK community (group) ID where the bot is installed.",
         "isLark": "Use Lark international domain (open.larksuite.com) instead of Feishu domain (open.feishu.cn).",
         "allowFrom": "Allowed user or group IDs, separated by commas.",
         "allowOrigins": "Allowed origin domains, separated by commas.",
