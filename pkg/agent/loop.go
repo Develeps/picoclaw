@@ -433,7 +433,7 @@ func (al *AgentLoop) CancelTurn(sessionKey string) bool {
 	if ts == nil {
 		return false
 	}
-	
+
 	// Request hard abort to stop LLM generation and tool execution
 	aborted := ts.requestHardAbort()
 	if aborted {
@@ -523,6 +523,13 @@ func (al *AgentLoop) runAgentLoop(
 		return "", err
 	}
 	if result.status == TurnEndStatusAborted {
+		// Turn was aborted (e.g., by /stop command) - do not publish response
+		logger.InfoCF("agent", "Turn aborted, skipping response publication",
+			map[string]any{
+				"turn_id":     ts.turnID,
+				"session_key": opts.Dispatch.SessionKey,
+				"agent_id":    agent.ID,
+			})
 		return "", nil
 	}
 
